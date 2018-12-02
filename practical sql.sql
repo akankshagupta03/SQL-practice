@@ -1,3 +1,71 @@
+create table tblgenre
+(genreid int identity (1,1) primary key,
+genrename varchar(20) not null,
+rating int  null, constraint chk_rating check(rating<=10)
+)
+
+
+alter trigger trg1 on [tblCountry]
+	after insert,update
+	as
+
+	DECLARE @INS int, @DEL int, @countryname varchar(20)
+
+SELECT @INS = COUNT(*) FROM INSERTED
+	SELECT @DEL = COUNT(*) FROM DELETED
+
+IF @INS > 0 AND @DEL > 0
+
+
+begin
+	insert into tblechange1 
+	SELECT @countryname =inserted.countryname,'New Values' FROM INSERTED
+	
+	insert into tblechange1 
+	select 	SELECT @countryname =deleted.countryname,'Old Values' from deleted
+	end
+	ELSE 
+BEGIN
+
+    -- a new record was inserted.
+
+    INSERT INTO tblechange1
+    SELECT @countryname =inserted.countryname,'New Values' FROM INSERTED
+	end
+
+	alter trigger trg1 on [tblCountry]
+	after insert,update
+	as
+
+	DECLARE @INS int, @DEL int
+
+SELECT @INS = COUNT(*) FROM INSERTED
+	SELECT @DEL = COUNT(*) FROM DELETED
+
+IF @INS > 0 AND @DEL > 0
+
+declare @countryname varchar(50),@action varchar(50)
+begin
+select @countryname=i.countryname from inserted i;	
+set @action='insert'
+
+	insert into tblechange1 ([CountryName] varchar(100),Change) values
+	( @countryname,@action )
+	
+	insert into tblechange1([CountryName] varchar(100),Change) 
+	select @CountryName,'Old Values' from deleted
+	end
+	ELSE 
+BEGIN
+
+    -- a new record was inserted.
+    INSERT INTO tblechange1([CountryName] varchar(100),Change) values
+	( @countryname,@action )
+	end
+
+
+
+
 CREATE TABLE employees (
     emp_id integer NOT NULL,
     emp_name character varying(15),
