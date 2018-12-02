@@ -1,3 +1,4 @@
+-- this file is updated now in remote repo
 create table tblgenre
 (genreid int identity (1,1) primary key,
 genrename varchar(20) not null,
