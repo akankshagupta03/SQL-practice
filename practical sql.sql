@@ -65,7 +65,7 @@ BEGIN
 	end
 
 
-
+-- table creation
 
 CREATE TABLE employees (
     emp_id integer NOT NULL,
