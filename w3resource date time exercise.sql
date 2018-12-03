@@ -78,5 +78,5 @@ SELECT CONVERT(varchar(15),  CAST(GETDATE() AS TIME), 100)+' '+ CONVERT(varchar(
 
 select firstname,lastname, hiredate from [dbo].[Employees] where 
 --year(hiredate)=1992
-cast(month(hiredate)as varchar)='april'
+datename(month,hiredate)='April'
 
